@@ -23,7 +23,14 @@ public class PlayerController : MonoBehaviour
     public GameObject box;
     public Box boxClass;
 
+    public GameObject movePointChecker;
+
     public LayerMask whatStopsMovement;
+
+    // Gizmos
+    //[SerializeField] private float x = 1;
+    //[SerializeField] private float y = 1;
+    [SerializeField] private float radius = .2f;
 
     /////////////////////////////////////////////////////////
 
@@ -51,7 +58,7 @@ public class PlayerController : MonoBehaviour
             if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f) // Button Check Horizontal 
             {
                 // Checks for Colliders
-                if (!Physics2D.OverlapCircle(/*vector*/movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f),/*circle radius*/.2f, /*layer mask*/whatStopsMovement))
+                if (!Physics2D.OverlapCircle(/*vector*/movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f),/*circle radius*/ radius, /*layer mask*/whatStopsMovement))
                 {
                     movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
                 }
@@ -60,11 +67,36 @@ public class PlayerController : MonoBehaviour
             else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f) // Button Check Vertical
             {
                 // Checks for Colliders
-                if (!Physics2D.OverlapCircle(/*vector*/movePoint.position + new Vector3(Input.GetAxisRaw("Vertical"), 0f, 0f),/*circle radius*/.2f, /*layer mask*/whatStopsMovement))
+                if (!Physics2D.OverlapCircle(/*vector*/movePoint.position + new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f),/*circle radius*/ radius, /*layer mask*/whatStopsMovement))
                 {
                     movePoint.position += new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
                 }
             }
+
+            //if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f) // Button Check Horizontal 
+            //{
+            //    // Checks for Colliders
+            //    if (!Physics2D.OverlapBox(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f), new Vector2(x, y), whatStopsMovement))
+            //    {
+            //        movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
+            //    }
+            //    else
+            //    {
+            //        Debug.Log("Collided with Shit (x-axis)");
+            //    }
+            //}
+            //else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f) // Button Check Vertical
+            //{
+            //    // Checks for Colliders
+            //    if (!Physics2D.OverlapBox(movePoint.position + new Vector3( 0f, Input.GetAxisRaw("Vertical"), 0f), new Vector2(x, y), whatStopsMovement))
+            //    {
+            //        movePoint.position += new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
+            //    }
+            //    else
+            //    {
+            //        Debug.Log("Collided with Shit (y-axis)");
+            //    }
+            //}
 
             anim.SetBool("isWalking", false);
             isWalking = false;
@@ -101,5 +133,11 @@ public class PlayerController : MonoBehaviour
                 temp.transform.position = this.transform.position + new Vector3(0, -0.1f, 0); // Setting Offset to temp  
             }
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        //Gizmos.DrawWireCube(movePoint.position, new Vector2(x, y));
+        Gizmos.DrawWireSphere(movePoint.position, radius);
     }
 }
