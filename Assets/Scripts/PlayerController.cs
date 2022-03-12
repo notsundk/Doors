@@ -15,24 +15,40 @@ public class PlayerController : MonoBehaviour
 
     public Animator anim;
 
+    public GameObject box;
+    public bool isHolding = false;
+    public bool isWalking = false;
+
     /////////////////////////////////////////////////////////
 
     // Start is called before the first frame update
     void Start()
     {
         movePoint.parent = null;    // movePoint child won't have parent any more.
-                                    // Why? idk.
     }
 
     // Update is called once per frame
     void Update()
     {
+        Movement();
+
+        if (Input.GetKeyDown(KeyCode.Space) && isHolding == true && isWalking == false) // "If" is always comparing to "true"
+        {
+            GameObject temp = Instantiate(box); // Instantiate box (prefab) called "temp"
+            temp.transform.position = this.transform.position + new Vector3(0,-0.1f,0); // Setting Offset to temp
+
+            isHolding = false;
+        }
+    }
+
+    private void Movement()
+    {
         //Debug.Log("Current Position: " + transform.position);
         Debug.Log("Target Position: " + movePoint.position);
 
-        transform.position = Vector3.MoveTowards(/*current pos*/transform.position, /*target pos*/movePoint.position, /*max distance delta*/moveSpeed * Time.deltaTime); 
+        transform.position = Vector3.MoveTowards(/*current pos*/transform.position, /*target pos*/movePoint.position, /*max distance delta*/moveSpeed * Time.deltaTime);
 
-        if(Vector3.Distance(transform.position, movePoint.position) <= .05f) // Check for distance between "current pos" and "target pos", checks if it's <= .05f
+        if (Vector3.Distance(transform.position, movePoint.position) <= .05f) // Check for distance between "current pos" and "target pos", checks if it's <= .05f
         {
             // "Horizontal" && "Vertical" string used below are from Unity's
             // Get Raw Axis for Horizontal Input, use absolute on it so that it is "1" no matter what, then check if it is equal to "1".
@@ -41,7 +57,7 @@ public class PlayerController : MonoBehaviour
             if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f) // Button Check Horizontal 
             {
                 // Checks for Colliders
-                if(!Physics2D.OverlapCircle(/*vector*/movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f),/*circle radius*/.2f, /*layer mask*/whatStopsMovement))
+                if (!Physics2D.OverlapCircle(/*vector*/movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f),/*circle radius*/.2f, /*layer mask*/whatStopsMovement))
                 {
                     movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
                 }
@@ -55,11 +71,13 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            anim.SetBool("Moving", false); 
+            anim.SetBool("isWalking", false);
+            isWalking = false;
         }
         else
         {
-            anim.SetBool("Idle", true);
+            anim.SetBool("isWalking", true);
+            isWalking = true;
         }
     }
 }
