@@ -5,23 +5,11 @@ using UnityEngine;
 public class Box : MonoBehaviour
 {
     private PlayerController controller;
-    private bool playerOnTop = false;
 
     // Start is called before the first frame update
     void Start()
     {
         controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && playerOnTop == true)
-        {
-            controller.isHolding = true;
-            Debug.Log("Player Holding Box, Destroy gameObject");
-            Destroy(gameObject); // small g gameObject is refering to itself
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -31,9 +19,21 @@ public class Box : MonoBehaviour
             return;
         }
 
-        playerOnTop = true;
+        controller.boxClass = this; // Make sure it reference the correct box
 
         Debug.Log("Box Collided with Player");
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (!other.gameObject.CompareTag("Player"))  // Guard Clause
+        {
+            return;
+        }
+
+        controller.boxClass = this;
+
+        Debug.Log("Box Still Collided with Player");
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -43,7 +43,7 @@ public class Box : MonoBehaviour
             return;
         }
 
-        playerOnTop = false;
+        controller.boxClass = null; // Make sure it un-reference the correct box
 
         Debug.Log("Box Un-Collided with Player");
     }

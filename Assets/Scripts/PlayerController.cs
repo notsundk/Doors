@@ -4,20 +4,26 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    // Notes:
+    // small g gameObject is refering to itself
+    // "If statements" are always comparing to "true" (bool)
+    // "Horizontal" && "Vertical" string used below are from Unity's
+    // Get Raw Axis for Horizontal Input, use absolute on it so that it is "1" no matter what, then check if it is equal to "1".
+
     // Reference Video:
     // Grid Based Movement in Unity: https://youtu.be/mbzXIOKZurA
 
     // Don't forget to reference!!!
     public float moveSpeed = 5f;
+    public bool isWalking = false;
+    public bool isHolding = false;
+
     public Transform movePoint;
+    public Animator anim;
+    public GameObject box;
+    public Box boxClass;
 
     public LayerMask whatStopsMovement;
-
-    public Animator anim;
-
-    public GameObject box;
-    public bool isHolding = false;
-    public bool isWalking = false;
 
     /////////////////////////////////////////////////////////
 
@@ -31,29 +37,17 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Movement();
-
-        if (Input.GetKeyDown(KeyCode.Space) && isHolding == true && isWalking == false) // "If" is always comparing to "true"
-        {
-            GameObject temp = Instantiate(box); // Instantiate box (prefab) called "temp"
-            temp.transform.position = this.transform.position + new Vector3(0,-0.1f,0); // Setting Offset to temp
-
-            isHolding = false;
-        }
+        BoxHoldingAndPlacement();
     }
 
     private void Movement()
     {
-        //Debug.Log("Current Position: " + transform.position);
-        Debug.Log("Target Position: " + movePoint.position);
+        //Debug.Log("Target Position: " + movePoint.position);
 
         transform.position = Vector3.MoveTowards(/*current pos*/transform.position, /*target pos*/movePoint.position, /*max distance delta*/moveSpeed * Time.deltaTime);
 
         if (Vector3.Distance(transform.position, movePoint.position) <= .05f) // Check for distance between "current pos" and "target pos", checks if it's <= .05f
         {
-            // "Horizontal" && "Vertical" string used below are from Unity's
-            // Get Raw Axis for Horizontal Input, use absolute on it so that it is "1" no matter what, then check if it is equal to "1".
-            // Use "else if" to combine the 2 Button Checks if you don't want the player to walk diagonally.
-
             if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f) // Button Check Horizontal 
             {
                 // Checks for Colliders
@@ -62,7 +56,8 @@ public class PlayerController : MonoBehaviour
                     movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
                 }
             }
-            if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f) // Button Check Vertical
+            // Use "else if" to combine the 2 Button Checks if you don't want the player to walk diagonally (do at a time).
+            else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f) // Button Check Vertical
             {
                 // Checks for Colliders
                 if (!Physics2D.OverlapCircle(/*vector*/movePoint.position + new Vector3(Input.GetAxisRaw("Vertical"), 0f, 0f),/*circle radius*/.2f, /*layer mask*/whatStopsMovement))
@@ -78,6 +73,33 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("isWalking", true);
             isWalking = true;
+        }
+    }
+
+    private void BoxHoldingAndPlacement()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (isHolding == false && boxClass != null) // Pick up box
+            {
+                isHolding = true;
+                anim.SetBool("isCarrying", true);
+
+                Debug.Log("Player Pick up Box, Destroy gameObject");
+
+                Destroy(boxClass.gameObject);
+                boxClass = null;
+            }
+            else if (isHolding == true && isWalking == false && boxClass == null) // Put down box
+            {
+                isHolding = false;
+                anim.SetBool("isCarrying", false);
+
+                Debug.Log("Player Put down Box, Instantiate gameObject");
+
+                GameObject temp = Instantiate(box); // Instantiate box (prefab) called "temp"
+                temp.transform.position = this.transform.position + new Vector3(0, -0.1f, 0); // Setting Offset to temp  
+            }
         }
     }
 }
