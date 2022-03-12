@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
 
     // Reference Video:
     // Grid Based Movement in Unity: https://youtu.be/mbzXIOKZurA
+    // Sprite Sorting Layer: https://youtu.be/9vBbg1-Bxcw
 
     // Don't forget to reference!!!
     public float moveSpeed = 5f;
