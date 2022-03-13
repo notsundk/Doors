@@ -5,10 +5,13 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Notes:
-    // small g gameObject is refering to itself
-    // "If statements" are always comparing to "true" (bool)
-    // "Horizontal" && "Vertical" string used below are from Unity's
+    // small g gameObject is refering to itself.
+    // "If statements" are always comparing to "true" (bool).
+    // "Horizontal" && "Vertical" string used below are from Unity's.
     // Get Raw Axis for Horizontal Input, use absolute on it so that it is "1" no matter what, then check if it is equal to "1".
+
+    // Champs Quotes:
+    // Know what you're writing.
 
     // Reference Video:
     // Grid Based Movement in Unity: https://youtu.be/mbzXIOKZurA
