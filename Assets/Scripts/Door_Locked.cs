@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Door : MonoBehaviour
+public class Door_Locked : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -12,16 +12,4 @@ public class Door : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
-
-    //[SerializeField] GameObject activeTarget;
-
-    //private void OnTriggerStay2D(Collider2D collision)
-    //{
-    //    activeTarget.SetActive(false);
-    //}
-
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    activeTarget.SetActive(true);
-    //}
 }

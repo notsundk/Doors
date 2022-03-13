@@ -56,56 +56,32 @@ public class PlayerController : MonoBehaviour
 
         if (Vector3.Distance(transform.position, movePoint.position) <= .05f) // Check for distance between "current pos" and "target pos", checks if it's <= .05f
         {
+            anim.SetBool("isWalking", false);
+            isWalking = false;
+
             if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f) // Button Check Horizontal 
             {
                 // Checks for Colliders
                 if (!Physics2D.OverlapCircle(/*vector*/movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f),/*circle radius*/ radius, /*layer mask*/whatStopsMovement))
                 {
                     movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
+                    anim.SetBool("isWalking", true);
+                    isWalking = true;
                 }
             }
+
             // Use "else if" to combine the 2 Button Checks if you don't want the player to walk diagonally (do at a time).
+
             else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f) // Button Check Vertical
             {
                 // Checks for Colliders
                 if (!Physics2D.OverlapCircle(/*vector*/movePoint.position + new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f),/*circle radius*/ radius, /*layer mask*/whatStopsMovement))
                 {
                     movePoint.position += new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
+                    anim.SetBool("isWalking", true);
+                    isWalking = true;
                 }
             }
-
-            //if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f) // Button Check Horizontal 
-            //{
-            //    // Checks for Colliders
-            //    if (!Physics2D.OverlapBox(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f), new Vector2(x, y), whatStopsMovement))
-            //    {
-            //        movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
-            //    }
-            //    else
-            //    {
-            //        Debug.Log("Collided with Shit (x-axis)");
-            //    }
-            //}
-            //else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f) // Button Check Vertical
-            //{
-            //    // Checks for Colliders
-            //    if (!Physics2D.OverlapBox(movePoint.position + new Vector3( 0f, Input.GetAxisRaw("Vertical"), 0f), new Vector2(x, y), whatStopsMovement))
-            //    {
-            //        movePoint.position += new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
-            //    }
-            //    else
-            //    {
-            //        Debug.Log("Collided with Shit (y-axis)");
-            //    }
-            //}
-
-            anim.SetBool("isWalking", false);
-            isWalking = false;
-        }
-        else
-        {
-            anim.SetBool("isWalking", true);
-            isWalking = true;
         }
     }
 
