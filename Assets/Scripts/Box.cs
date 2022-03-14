@@ -33,7 +33,7 @@ public class Box : MonoBehaviour
 
         controller.boxClass = this;
 
-        Debug.Log("Box Still Collided with Player");
+        //Debug.Log("Box Still Collided with Player");
     }
 
     private void OnTriggerExit2D(Collider2D other)

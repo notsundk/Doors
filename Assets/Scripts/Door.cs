@@ -8,37 +8,51 @@ public class Door : MonoBehaviour
     public PlayerController controller;
     public Button[] button;
 
+    public Animator anim;
+
     public GameObject successText;
+    public GameObject doorIsLockText;
     public GameObject missingBoxText;
 
     private bool isOpen = false;
+
+    private void Awake()
+    {
+        // Makes sure all text is closed.
+        successText.SetActive(false);
+        doorIsLockText.SetActive(false);
+        missingBoxText.SetActive(false);
+    }
 
     private void Update()
     {
         buttonCheck();
     }
 
-    private void buttonCheck()
+    private void buttonCheck() // Check if all button in array is being pressed.
     {
         isOpen = true;
+        anim.SetBool("isOpen", true);
 
         for (int i = 0; i < button.Length; i++)
         {
             if (button[i].isPressed != true)
             {
                 isOpen = false;
+                anim.SetBool("isOpen", false);
             }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other) // On entering the door
     {
-        if (!isOpen) // Gaurd Clause
+        if (!isOpen) // Gaurd Clause, return if door is not opened
         {
+            doorIsLockText.SetActive(true);
             return;
         }
 
-        if (other.gameObject.CompareTag("Player") && controller.isHolding == true)
+        if (other.gameObject.CompareTag("Player") && controller.isHolding == true) // check for player tag and that if player is holding a box
         {
             successText.SetActive(true);
             Invoke("LoadScene", 2f);
@@ -51,6 +65,7 @@ public class Door : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        doorIsLockText.SetActive(false);
         missingBoxText.SetActive(false);
     }
 

@@ -24,9 +24,8 @@ public class PlayerController : MonoBehaviour
 
     public Transform movePoint;
     public Animator anim;
-    public GameObject box;
     public Box boxClass;
-
+    public GameObject box;
     public GameObject movePointChecker;
 
     public LayerMask whatStopsMovement;
