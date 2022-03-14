@@ -16,7 +16,7 @@ GameObject:
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -52,6 +52,7 @@ MonoBehaviour:
   - {fileID: 0}
   anim: {fileID: 5235173140039073206}
   successText: {fileID: 0}
+  doorIsLockText: {fileID: 0}
   missingBoxText: {fileID: 0}
 --- !u!61 &5235173140039073209
 BoxCollider2D:
