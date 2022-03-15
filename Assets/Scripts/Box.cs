@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Box : MonoBehaviour
 {
+    [Header("Reference Stuff")]
     private PlayerController controller;
 
     // Start is called before the first frame update

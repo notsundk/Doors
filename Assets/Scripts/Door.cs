@@ -1,20 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour
 {
+    [Header("States & Attributes")]
+    private bool isOpen = false;
+
+    [Header("Reference Stuff")]
     public PlayerController controller;
     public Button[] button;
 
     public Animator anim;
-
     public GameObject successText;
     public GameObject doorIsLockText;
     public GameObject missingBoxText;
-
-    private bool isOpen = false;
 
     private void Awake()
     {

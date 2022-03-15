@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
-{
+{  
     // Notes:
     // small g gameObject is refering to itself.
     // "If statements" are always comparing to "true" (bool).
@@ -17,22 +15,25 @@ public class PlayerController : MonoBehaviour
     // Grid Based Movement in Unity: https://youtu.be/mbzXIOKZurA
     // Sprite Sorting Layer: https://youtu.be/9vBbg1-Bxcw
 
-    // Don't forget to reference!!!
+    [Header("States & Attributes")]
+    [Tooltip("Player's Move Speed, this affect Distance as well for some reason.")]
     public float moveSpeed = 5f;
     public bool isWalking = false;
     public bool isHolding = false;
 
+    [Header("Reference Stuff")]
     public Transform movePoint;
     public Animator anim;
+    [Tooltip("Prefab of Box, for placement as Clone")]
+    public GameObject boxPrefab;
+    [Tooltip("Class of the held Box GameObject")]
     public Box boxClass;
-    public GameObject box;
-    public GameObject movePointChecker;
 
+    [Header("Collision Layer Selection")]
+    [Tooltip("Only the Collision in that selected LayerMask will affect the Player.")]
     public LayerMask whatStopsMovement;
 
-    // Gizmos
-    //[SerializeField] private float x = 1;
-    //[SerializeField] private float y = 1;
+    [Header("Gizmo Control")]
     [SerializeField] private float radius = .2f;
 
     /////////////////////////////////////////////////////////
@@ -40,7 +41,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        movePoint.parent = null;    // movePoint child won't have parent any more.
+        movePoint.parent = null;    // movePoint child won't have parent no more.
     }
 
     // Update is called once per frame
@@ -108,7 +109,7 @@ public class PlayerController : MonoBehaviour
 
                 Debug.Log("Player Put down Box, Instantiate gameObject");
 
-                GameObject temp = Instantiate(box); // Instantiate box (prefab) called "temp"
+                GameObject temp = Instantiate(boxPrefab); // Instantiate box (prefab) called "temp"
                 temp.transform.position = this.transform.position + new Vector3(0, -0.1f, 0); // Setting Offset to temp  
             }
         }

@@ -1684,7 +1684,7 @@ GameObject:
   - component: {fileID: 969982825}
   - component: {fileID: 969982824}
   m_Layer: 6
-  m_Name: Square
+  m_Name: Barrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
