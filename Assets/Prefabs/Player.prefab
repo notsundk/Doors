@@ -134,9 +134,8 @@ MonoBehaviour:
   isHolding: 0
   movePoint: {fileID: 2233687810953112025}
   anim: {fileID: 2233687811618527863}
-  box: {fileID: 6600415289321951345, guid: 018e36761ba3f194fbd991fe18789965, type: 3}
+  boxPrefab: {fileID: 6600415289321951345, guid: 018e36761ba3f194fbd991fe18789965, type: 3}
   boxClass: {fileID: 0}
-  movePointChecker: {fileID: 0}
   whatStopsMovement:
     serializedVersion: 2
     m_Bits: 64

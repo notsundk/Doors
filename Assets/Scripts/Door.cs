@@ -6,10 +6,11 @@ public class Door : MonoBehaviour
     [Header("States & Attributes")]
     private bool isOpen = false;
 
-    [Header("Reference Stuff")]
-    public PlayerController controller;
+    [Header("Reference Other Scripts")]
+    private PlayerController controller;
     public Button[] button;
 
+    [Header("Reference Stuff")]
     public Animator anim;
     public GameObject successText;
     public GameObject doorIsLockText;
@@ -17,7 +18,8 @@ public class Door : MonoBehaviour
 
     private void Awake()
     {
-        // Makes sure all text is closed.
+        controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();   // Auto Reference
+
         successText.SetActive(false);
         doorIsLockText.SetActive(false);
         missingBoxText.SetActive(false);

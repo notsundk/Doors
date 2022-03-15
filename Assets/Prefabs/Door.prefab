@@ -46,10 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a402595a44583c842a257cbf22f76672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 0}
-  button:
-  - {fileID: 0}
-  - {fileID: 0}
+  button: []
   anim: {fileID: 5235173140039073206}
   successText: {fileID: 0}
   doorIsLockText: {fileID: 0}
@@ -78,7 +75,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.71156186, y: 0.73367155}
+  m_Size: {x: 0.7, y: 0.7}
   m_EdgeRadius: 0
 --- !u!212 &5235173140039073210
 SpriteRenderer:

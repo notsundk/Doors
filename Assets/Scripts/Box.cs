@@ -2,13 +2,12 @@ using UnityEngine;
 
 public class Box : MonoBehaviour
 {
-    [Header("Reference Stuff")]
+    [Header("Reference Other Scripts")]
     private PlayerController controller;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();   // Auto Reference
     }
 
     private void OnTriggerEnter2D(Collider2D other)

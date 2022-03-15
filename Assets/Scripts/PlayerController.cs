@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {  
@@ -49,6 +50,7 @@ public class PlayerController : MonoBehaviour
     {
         Movement();
         BoxHoldingAndPlacement();
+        QuickRestart();
     }
 
     private void Movement()
@@ -90,28 +92,35 @@ public class PlayerController : MonoBehaviour
 
     private void BoxHoldingAndPlacement()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space)) // Press Space
         {
-            if (isHolding == false && boxClass != null) // Pick up box
+            if (isHolding == false && boxClass != null) // Pick up box, if player: is not holding box & doesn't detect a boxClass
             {
                 isHolding = true;
                 anim.SetBool("isCarrying", true);
-
-                Debug.Log("Player Pick up Box, Destroy gameObject");
-
-                Destroy(boxClass.gameObject);
+                Destroy(boxClass.gameObject);   // It's okay to destroy boxClass because new box is generated from Prefab
                 boxClass = null;
+
+                //Debug.Log("Player Pick up Box, Destroy gameObject");
             }
-            else if (isHolding == true && isWalking == false && boxClass == null) // Put down box
+            else if (isHolding == true && isWalking == false && boxClass == null) // Put down box, if player: is holding box & is not walking & doesn't have a boxClass
             {
                 isHolding = false;
                 anim.SetBool("isCarrying", false);
-
-                Debug.Log("Player Put down Box, Instantiate gameObject");
-
                 GameObject temp = Instantiate(boxPrefab); // Instantiate box (prefab) called "temp"
                 temp.transform.position = this.transform.position + new Vector3(0, -0.1f, 0); // Setting Offset to temp  
+
+                //Debug.Log("Player Put down Box, Instantiate gameObject");
             }
+        }
+    }
+
+    private void QuickRestart()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            Debug.Log("Quick Restart");
         }
     }
 
