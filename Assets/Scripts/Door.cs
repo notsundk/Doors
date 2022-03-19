@@ -37,7 +37,9 @@ public class Door : MonoBehaviour
 
         for (int i = 0; i < button.Length; i++)
         {
-            if (button[i].isPressed != true)
+            //if (button[i].isPressed == false)
+            //if (button[i].isPressed != true)
+            if (!button[i].isPressed)
             {
                 isOpen = false;
                 anim.SetBool("isOpen", false);
