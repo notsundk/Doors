@@ -16,6 +16,11 @@ public class Door : MonoBehaviour
     public GameObject doorIsLockText;
     public GameObject missingBoxText;
 
+    [Header("Auto-Reference Stuff")]
+    public GameObject Sound_Door_Locked;
+    public GameObject Sound_Door_MissingBox;
+    public GameObject Sound_Door_Success;
+
     private void Awake()
     {
         controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();   // Auto Reference
@@ -23,6 +28,10 @@ public class Door : MonoBehaviour
         successText.SetActive(false);
         doorIsLockText.SetActive(false);
         missingBoxText.SetActive(false);
+
+        Sound_Door_Locked = GameObject.Find("Sound_Door_Locked");
+        Sound_Door_MissingBox = GameObject.Find("Sound_Door_MissingBox");
+        Sound_Door_Success = GameObject.Find("Sound_Door_Success");
     }
 
     private void Update()
@@ -52,17 +61,20 @@ public class Door : MonoBehaviour
         if (!isOpen) // Gaurd Clause, return if door is not opened
         {
             doorIsLockText.SetActive(true);
+            Sound_Door_Locked.GetComponent<AudioSource>().Play();
             return;
         }
 
         if (other.gameObject.CompareTag("Player") && controller.isHolding == true) // check for player tag and that if player is holding a box
         {
             successText.SetActive(true);
+            Sound_Door_Success.GetComponent<AudioSource>().Play();
             Invoke("LoadScene", 2f);
         }
         else
         {
             missingBoxText.SetActive(true);
+            Sound_Door_MissingBox.GetComponent<AudioSource>().Play();
         }
     }
 

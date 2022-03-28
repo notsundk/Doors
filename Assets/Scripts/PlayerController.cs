@@ -30,6 +30,11 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Class of the held Box GameObject")]
     public Box boxClass;
 
+    [Header("Auto-Reference Stuff")]
+    public GameObject Sound_Walk;
+    public GameObject Sound_PickUp;
+    public GameObject Sound_PutDown;
+
     [Header("Collision Layer Selection")]
     [Tooltip("Only the Collision in that selected LayerMask will affect the Player.")]
     public LayerMask whatStopsMovement;
@@ -43,6 +48,10 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         movePoint.parent = null;    // movePoint child won't have parent no more.
+
+        Sound_Walk = GameObject.Find("Sound_Walk");
+        Sound_PickUp = GameObject.Find("Sound_PickUp");
+        Sound_PutDown = GameObject.Find("Sound_PutDown");
     }
 
     // Update is called once per frame
@@ -73,6 +82,7 @@ public class PlayerController : MonoBehaviour
                     movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
                     anim.SetBool("isWalking", true);
                     isWalking = true;
+                    Sound_Walk.GetComponent<AudioSource>().Play();
                 }
             }
 
@@ -86,6 +96,7 @@ public class PlayerController : MonoBehaviour
                     movePoint.position += new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
                     anim.SetBool("isWalking", true);
                     isWalking = true;
+                    Sound_Walk.GetComponent<AudioSource>().Play();
                 }
             }
         }
@@ -102,6 +113,7 @@ public class PlayerController : MonoBehaviour
                 Destroy(boxClass.gameObject);   // It's okay to destroy boxClass because new box is generated from Prefab
                 boxClass = null;
 
+                Sound_PickUp.GetComponent<AudioSource>().Play();
                 //Debug.Log("Player Pick up Box, Destroy gameObject");
             }
             else if (isHolding == true && isWalking == false && boxClass == null) // Put down box, if player: is holding box & is not walking & doesn't have a boxClass
@@ -111,6 +123,7 @@ public class PlayerController : MonoBehaviour
                 GameObject temp = Instantiate(boxPrefab); // Instantiate box (prefab) called "temp"
                 temp.transform.position = this.transform.position + new Vector3(0, -0.1f, 0); // Setting Offset to temp  
 
+                Sound_PutDown.GetComponent<AudioSource>().Play();
                 //Debug.Log("Player Put down Box, Instantiate gameObject");
             }
         }
