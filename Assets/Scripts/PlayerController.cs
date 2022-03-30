@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
         BoxHoldingAndPlacement();
         QuickRestart();
         LevelSkip();
+        Return2MainMenu();
     }
 
     private void Movement()
@@ -144,6 +145,15 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             Debug.Log("Level Skip");
+        }
+    }
+
+    public void Return2MainMenu()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Debug.Log("Return to Main Menu");
+            SceneManager.LoadScene(0);
         }
     }
 
